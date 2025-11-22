@@ -89,8 +89,8 @@
           <groupId>com.jayway.jsonpath</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jakarta.xml.bind-api</artifactId>
-          <groupId>jakarta.xml.bind</groupId>
+          <artifactId>javax.xml.bind-api</artifactId>
+          <groupId>javax.xml.bind</groupId>
         </exclusion>
         <exclusion>
           <artifactId>json-smart</artifactId>
