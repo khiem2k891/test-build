@@ -1,0 +1,23 @@
+package ssc2.amigo.taskmanager.dto;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+public class CreateTaskRequest {
+
+    @NotBlank(message = "Title không được để trống")
+    @Size(max = 100, message = "Title tối đa 100 ký tự")
+    private String title;
+
+    @Size(max = 1000, message = "Description tối đa 1000 ký tự")
+    private String description;
+
+    @FutureOrPresent(message = "Due date phải là hiện tại hoặc tương lai")
+    private LocalDateTime dueDate;
+}
+
