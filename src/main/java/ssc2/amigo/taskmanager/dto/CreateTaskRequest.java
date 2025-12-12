@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class CreateTaskRequest {
@@ -18,6 +18,5 @@ public class CreateTaskRequest {
     private String description;
 
     @FutureOrPresent(message = "Due date phải là hiện tại hoặc tương lai")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 }
-
