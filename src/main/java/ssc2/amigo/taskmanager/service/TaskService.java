@@ -18,7 +18,7 @@ public class TaskService {
     private final Map<Long, Task> tasks = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(0);
 
-    // ✅ Controller gọi getAllTasks()
+    // Lấy toàn bộ task
     public List<TaskResponse> getAllTasks() {
         List<TaskResponse> result = new ArrayList<>();
         for (Task task : tasks.values()) {
@@ -27,7 +27,7 @@ public class TaskService {
         return result;
     }
 
-    // ✅ Controller gọi getTaskById(Long)
+    // Lấy task theo ID
     public TaskResponse getTaskById(Long id) {
         Task task = tasks.get(id);
         if (task == null) {
@@ -36,7 +36,7 @@ public class TaskService {
         return toResponse(task);
     }
 
-    // ✅ Controller gọi createTask(CreateTaskRequest)
+    // Tạo task
     public TaskResponse createTask(CreateTaskRequest request) {
         Long id = idGenerator.incrementAndGet();
 
@@ -46,14 +46,14 @@ public class TaskService {
                 .description(request.getDescription())
                 .status(TaskStatus.TODO)
                 .createdAt(LocalDateTime.now())
-                .dueDate(request.getDueDate())
+                .dueDate(request.getDueDate().atStartOfDay())   // ⭐ QUAN TRỌNG
                 .build();
 
         tasks.put(id, task);
         return toResponse(task);
     }
 
-    // ✅ Controller gọi updateStatus(Long, TaskStatus)
+    // Cập nhật trạng thái task
     public TaskResponse updateStatus(Long id, TaskStatus newStatus) {
         Task task = tasks.get(id);
         if (task == null) {
@@ -66,7 +66,7 @@ public class TaskService {
         return toResponse(task);
     }
 
-    // ✅ Controller gọi deleteTask(Long)
+    // Xoá task
     public void deleteTask(Long id) {
         if (!tasks.containsKey(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task không tồn tại");
@@ -74,7 +74,7 @@ public class TaskService {
         tasks.remove(id);
     }
 
-    // helper convert entity -> response DTO
+    // Helper: convert entity → response
     private TaskResponse toResponse(Task task) {
         return new TaskResponse(
                 task.getId(),
@@ -86,4 +86,3 @@ public class TaskService {
         );
     }
 }
-
