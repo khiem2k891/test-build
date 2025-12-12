@@ -18,6 +18,6 @@ public class CreateTaskRequest {
     private String description;
 
     @FutureOrPresent(message = "Due date phải là hiện tại hoặc tương lai")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 }
 
