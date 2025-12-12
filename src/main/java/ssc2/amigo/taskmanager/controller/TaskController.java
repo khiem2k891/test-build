@@ -33,16 +33,16 @@ public class TaskController {
     }
 
     // POST /api/tasks
-    @PostMapping
+    @PostMapping(
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<TaskResponse> create(@Valid @RequestBody CreateTaskRequest request) {
-        return ResponseEntity.ok(taskService.createTask(request));
-    }
-
-    // PATCH /api/tasks/{id}/status
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<TaskResponse> updateStatus(@PathVariable Long id,
-                                                     @RequestParam TaskStatus status) {
-        return ResponseEntity.ok(taskService.updateStatus(id, status));
+        TaskResponse created = taskService.createTask(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(created);
     }
 
     // DELETE /api/tasks/{id}
